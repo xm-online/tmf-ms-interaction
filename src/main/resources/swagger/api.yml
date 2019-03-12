@@ -1,0 +1,411 @@
+schemes:
+    - https
+consumes:
+    - application/json
+produces:
+    - application/json
+swagger: '2.0'
+tags:
+    - name: Party interactions
+basePath: /api/partyInteractionManagement/v1
+host: serverRoot
+info:
+    description: 'The party interactions management TMF Open API is intented to be used to create or retrieve information about when, how and why any party has interacted with a company.'
+    title: Party Interaction Management
+    version: 1.0.0
+paths:
+    /partyInteraction:
+        post:
+            operationId: createPartyInteraction
+            parameters:
+                - description: Data for the party interaction creation
+                  in: body
+                  name: partyInteractionRequest
+                  required: true
+                  schema:
+                      $ref: '#/definitions/PartyInteractionRequestType'
+            produces:
+                - application/json
+            responses:
+                '201':
+                    description: Party interaction created successfully
+                    schema:
+                        $ref: '#/definitions/PartyInteractionType'
+                    headers:
+                        Location:
+                            description: Location where to query the created party interaction
+                            type: string
+                '400':
+                    description: Bad Request
+                '401':
+                    description: Unauthorized
+                '403':
+                    description: Forbidden
+                '404':
+                    description: Not Found
+                '405':
+                    description: Method not Allowed
+                '409':
+                    description: Conflict
+                '500':
+                    description: Internal Server Error
+            summary: Create a new party interaction
+            tags:
+                - Party interactions
+        get:
+            operationId: retrievePartyInteractions
+            parameters:
+                - description: To retrieve interactions related with a specific account
+                  in: query
+                  name: accountId
+                  required: false
+                  type: string
+                - description: To retrieve interactions related with a specific customer
+                  in: query
+                  name: customerId
+                  required: false
+                  type: string
+                - description: To obtain interactions that happened after this value
+                  format: date-time
+                  in: query
+                  name: startDate
+                  required: false
+                  type: string
+                - description: To obtain interactions that happened before this value
+                  format: date-time
+                  in: query
+                  name: endDate
+                  required: false
+                  type: string
+                - description: To obtain interactions in a specific channel
+                  in: query
+                  name: channel.id
+                  required: false
+                  type: string
+                - description: To obtain interactions in a specific channel
+                  in: query
+                  name: channel.name
+                  required: false
+                  type: string
+                - description: To obtain interactions with a specific status
+                  in: query
+                  name: status
+                  required: false
+                  type: string
+                - description: To obtain interactions with a specific subStatus
+                  in: query
+                  name: subStatus
+                  required: false
+                  type: string
+                - description: To obtain interactions of a specific type
+                  in: query
+                  name: type
+                  required: false
+                  type: string
+                - description: To limit the amount of results
+                  in: query
+                  name: limit
+                  required: false
+                  type: string
+                - description: To get the results starting from an offset value. Use for pagination
+                  in: query
+                  name: offset
+                  required: false
+                  type: string
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: Party interactions retrieved successfully
+                    schema:
+                        items:
+                            $ref: '#/definitions/PartyInteractionType'
+                        type: array
+                    headers:
+                        X-Total-Count:
+                            description: Total results
+                            type: integer
+                '400':
+                    description: Bad Request
+                '401':
+                    description: Unauthorized
+                '403':
+                    description: Forbidden
+                '405':
+                    description: Method not Allowed
+                '500':
+                    description: Internal Server Error
+            summary: Retrieve a list of party interactions
+            tags:
+                - Party interactions
+    '/partyInteraction/{partyInteractionId}':
+        get:
+            operationId: retrievePartyInteraction
+            parameters:
+                - description: The id of the party interaction to be fetched
+                  in: path
+                  name: partyInteractionId
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: Party interaction retrieved successfully
+                    schema:
+                        $ref: '#/definitions/PartyInteractionType'
+                '400':
+                    description: Bad Request
+                '401':
+                    description: Unauthorized
+                '403':
+                    description: Forbidden
+                '404':
+                    description: Not Found
+                '405':
+                    description: Method not Allowed
+                '500':
+                    description: Internal Server Error
+            summary: Retrieve a party interaction
+            tags:
+                - Party interactions
+    '/partyInteraction/{partyInteractionId}/status':
+        put:
+            operationId: modifyPartyInteractionStatus
+            parameters:
+                - description: The id of the party interaction to be fetched
+                  in: path
+                  name: partyInteractionId
+                  required: true
+                  type: string
+                - description: New value for the status field
+                  in: body
+                  name: partyInteractionStatusRequest
+                  required: true
+                  schema:
+                      type: string
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: Party interaction status modified successfully
+                    schema:
+                        $ref: '#/definitions/PartyInteractionType'
+                '400':
+                    description: Bad Request
+                '401':
+                    description: Unauthorized
+                '403':
+                    description: Forbidden
+                '404':
+                    description: Not Found
+                '405':
+                    description: Method not Allowed
+                '409':
+                    description: Conflict
+                '500':
+                    description: Internal Server Error
+            summary: Modify party interaction status
+            tags:
+                - Party interactions
+definitions:
+    PartyInteractionRequestType:
+        properties:
+            '@baseType':
+                description: Base Type of interaction
+                type: string
+            '@type':
+                description: 'Type of interaction. E.g: phone call, sms, store, kiosk, mobile app, chat...'
+                type: string
+            '@schemaLocation':
+                description: Where to query the model schema
+                type: string
+            interactionDate:
+                description: Time interval when the interaction took place
+                $ref: '#/definitions/TimePeriodType'
+            description:
+                type: string
+                description: Human readable summary of the interaction
+            reason:
+                type: string
+                description: Why the interaction tooke place
+            status:
+                type: string
+                description: Interaction status
+            subStatus:
+                description: Interaction subStatus
+                type: string
+            statusChangeDate:
+                description: last time the interaction changed
+                type: string
+                format: date-time
+            direction:
+                description: 'Who started the interaction, the party proactively going to a store or calling our call center, or the company sending a promotion SMS, calling him or sending him a letter with the bill'
+                type: string
+                enum:
+                    - inbounds
+                    - outbounds
+            channel:
+                description: channel where the interaction took place
+                type: array
+                items:
+                    $ref: '#/definitions/ChannelRefType'
+            relatedParty:
+                description: channel where the interaction took place
+                type: array
+                items:
+                    $ref: '#/definitions/RelatedPartyType'
+            interactionItem:
+                description: 'items referred during the interaction (e.g.: purchases, tickets...)'
+                type: array
+                items:
+                    $ref: '#/definitions/InteractionItemType'
+        required:
+            - interactionDate
+    PartyInteractionType:
+        allOf:
+            - type: object
+              properties:
+                  id:
+                      type: string
+                      description: unique identifier of the party interaction
+                  href:
+                      type: string
+                      description: URI where to query and perform operations on the interaction
+              required:
+                  - id
+                  - href
+            - $ref: '#/definitions/PartyInteractionRequestType'
+    ChannelRefType:
+        description: Reference to a channel that can be queried with an API call.
+        properties:
+            id:
+                type: string
+                description: Unique identifier of the channel
+            href:
+                type: string
+                description: URI where to query or perform actions on the channel
+            name:
+                type: string
+                description: Screen name of the channel
+            description:
+                type: string
+                description: Description of the channel
+        required:
+            - id
+            - href
+    RelatedPartyType:
+        description: Reference to an external party that can be tipically queried with another API
+        properties:
+            id:
+                type: string
+                description: Unique identifier of the party
+            href:
+                type: string
+                description: URI where to query or perform actions on the party
+            '@referredType':
+                type: string
+                description: 'Type of party (e.g.: customer, agent, etc.)'
+            role:
+                type: string
+                description: Role of the related party
+            name:
+                type: string
+                description: Screen name of the party
+        required:
+            - id
+            - '@referredType'
+    InteractionItemType:
+        description: Item that was referred during the interaction
+        properties:
+            id:
+                type: string
+                description: Unique identifier of the item
+            href:
+                type: string
+                description: URI where to query or perform actions on the item
+            '@referredType':
+                type: string
+                description: 'Type of item (e.g.: order, ticket, etc.)'
+            itemDate:
+                type: string
+                format: date-time
+                description: When the item was referred
+            resolution:
+                type: string
+                description: item resolution
+            item:
+                $ref: '#/definitions/RelatedEntityRefType'
+            note:
+                type: array
+                items:
+                    $ref: '#/definitions/NoteType'
+            attachment:
+                type: array
+                items:
+                    $ref: '#/definitions/AttachmentType'
+    RelatedEntityRefType:
+        description: 'Reference to an external entity that can be tipically queried with another API such as a customer account, a ticket, etc.'
+        properties:
+            id:
+                type: string
+                description: Unique identifier of the entity
+            href:
+                type: string
+                description: URI where to query or perform actions on the entity
+            '@referredType':
+                type: string
+                description: 'Type of entity (e.g.: account, ticket, etc.)'
+            name:
+                type: string
+                description: Screen name of the entity
+            role:
+                type: string
+                description: Role of the entity
+        required:
+            - id
+            - '@referredType'
+    NoteType:
+        description: A note attached to something.
+        properties:
+            date:
+                type: string
+                format: date-time
+            author:
+                type: string
+            text:
+                type: string
+    AttachmentType:
+        description: An attachment attached to something.
+        properties:
+            id:
+                type: string
+                description: Unique identifier of the attachment
+            href:
+                type: string
+                description: URI where to query or perform actions on the attachment
+            name:
+                type: string
+            description:
+                type: string
+            mimeType:
+                type: string
+            size:
+                type: number
+                format: decimal
+            sizeUnit:
+                type: string
+            url:
+                type: string
+            validFor:
+                $ref: '#/definitions/TimePeriodType'
+    TimePeriodType:
+        properties:
+            startDateTime:
+                format: date-time
+                type: string
+            endDateTime:
+                format: date-time
+                type: string
+        required:
+            - startDateTime
