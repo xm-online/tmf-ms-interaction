@@ -18,12 +18,17 @@ paths:
         post:
             operationId: createPartyInteraction
             parameters:
+                - name: profile
+                  required: false
+                  in: query
+                  description: ''
+                  type: string
                 - description: Data for the party interaction creation
                   in: body
-                  name: partyInteractionRequest
+                  name: partyInteraction
                   required: true
                   schema:
-                      $ref: '#/definitions/PartyInteractionRequestType'
+                      $ref: '#/definitions/PartyInteractionType'
             produces:
                 - application/json
             responses:
@@ -55,6 +60,11 @@ paths:
         get:
             operationId: retrievePartyInteractions
             parameters:
+                - name: profile
+                  required: false
+                  in: query
+                  description: ''
+                  type: string
                 - description: To retrieve interactions related with a specific account
                   in: query
                   name: accountId
@@ -65,16 +75,21 @@ paths:
                   name: customerId
                   required: false
                   type: string
+                - name: relatedParty.id
+                  required: false
+                  in: query
+                  description: ''
+                  type: string
                 - description: To obtain interactions that happened after this value
                   format: date-time
                   in: query
-                  name: startDate
+                  name: interactionStartDate
                   required: false
                   type: string
                 - description: To obtain interactions that happened before this value
                   format: date-time
                   in: query
-                  name: endDate
+                  name: interactionEndDate
                   required: false
                   type: string
                 - description: To obtain interactions in a specific channel
@@ -142,6 +157,11 @@ paths:
         get:
             operationId: retrievePartyInteraction
             parameters:
+                - name: profile
+                  required: false
+                  in: query
+                  description: ''
+                  type: string
                 - description: The id of the party interaction to be fetched
                   in: path
                   name: partyInteractionId
@@ -209,7 +229,7 @@ paths:
             tags:
                 - Party interactions
 definitions:
-    PartyInteractionRequestType:
+    PartyInteractionType:
         properties:
             '@baseType':
                 description: Base Type of interaction
@@ -262,20 +282,6 @@ definitions:
                     $ref: '#/definitions/InteractionItemType'
         required:
             - interactionDate
-    PartyInteractionType:
-        allOf:
-            - type: object
-              properties:
-                  id:
-                      type: string
-                      description: unique identifier of the party interaction
-                  href:
-                      type: string
-                      description: URI where to query and perform operations on the interaction
-              required:
-                  - id
-                  - href
-            - $ref: '#/definitions/PartyInteractionRequestType'
     ChannelRefType:
         description: Reference to a channel that can be queried with an API call.
         properties:
