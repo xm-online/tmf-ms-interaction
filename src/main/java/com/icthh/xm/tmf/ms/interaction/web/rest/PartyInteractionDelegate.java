@@ -20,7 +20,7 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
 
     @Timed
     @LogicExtensionPoint(value = "PartyInteractionCreate", resolver = ProfileKeyResolver.class)
-    @PreAuthorize("hasPermission({}, 'INTERACTION.ADD')")
+    @PreAuthorize("hasPermission({'profile': #profile}, 'INTERACTION.ADD')")
     @Override
     public ResponseEntity<PartyInteractionType> createPartyInteraction(PartyInteractionType partyInteractionRequestType,
                                                                        String profile) {
@@ -30,7 +30,7 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
 
     @Timed
     @LogicExtensionPoint(value = "PartyInteractionRetrieve", resolver = ProfileKeyResolver.class)
-    @PreAuthorize("hasPermission({}, 'INTERACTION.GET')")
+    @PreAuthorize("hasPermission({'profile': #profile}, 'INTERACTION.GET')")
     @Override
     public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String profile,
                                                                          String partyInteractionId) {
@@ -40,7 +40,7 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
 
     @Timed
     @LogicExtensionPoint(value = "PartyInteractionFind", resolver = ProfileKeyResolver.class)
-    @PreAuthorize("hasPermission({}, 'INTERACTION.GET-LIST')")
+    @PreAuthorize("hasPermission({'profile': #profile}, 'INTERACTION.GET-LIST')")
     @Override
     public ResponseEntity<List<PartyInteractionType>> retrievePartyInteractions(String profile,
                                                                                 String accountId,

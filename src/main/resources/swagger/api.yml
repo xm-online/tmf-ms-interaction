@@ -299,7 +299,6 @@ definitions:
                 description: Description of the channel
         required:
             - id
-            - href
     RelatedPartyType:
         description: Reference to an external party that can be tipically queried with another API
         properties:
@@ -320,7 +319,6 @@ definitions:
                 description: Screen name of the party
         required:
             - id
-            - '@referredType'
     InteractionItemType:
         description: Item that was referred during the interaction
         properties:
@@ -370,7 +368,6 @@ definitions:
                 description: Role of the entity
         required:
             - id
-            - '@referredType'
     NoteType:
         description: A note attached to something.
         properties:
