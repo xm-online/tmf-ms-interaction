@@ -38,7 +38,6 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
     @Override
     public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String partyInteractionId, String profile) {
         return retrievePartyInteractionInternal(profile, partyInteractionId);
-
     }
 
     @LogicExtensionPoint(value = "PartyInteractionRetrieve", resolver = ProfileKeyResolver.class)
