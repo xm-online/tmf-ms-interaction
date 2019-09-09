@@ -19,11 +19,17 @@ import java.util.List;
 public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
 
     @Timed
-    @LogicExtensionPoint(value = "PartyInteractionCreate", resolver = ProfileKeyResolver.class)
     @PreAuthorize("hasPermission({'profile': #profile}, 'INTERACTION.ADD')")
     @Override
     public ResponseEntity<PartyInteractionType> createPartyInteraction(PartyInteractionType partyInteractionRequestType,
                                                                        String profile) {
+        return createPartyInteractionInteranal(profile, partyInteractionRequestType);
+
+    }
+
+    @LogicExtensionPoint(value = "PartyInteractionCreate", resolver = ProfileKeyResolver.class)
+    private ResponseEntity<PartyInteractionType> createPartyInteractionInteranal(String profile,
+                                                                                 PartyInteractionType partyInteractionRequestType) {
         return ResponseEntity.ok(new PartyInteractionType());
 
     }
@@ -32,10 +38,15 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
     @LogicExtensionPoint(value = "PartyInteractionRetrieve", resolver = ProfileKeyResolver.class)
     @PreAuthorize("hasPermission({'profile': #profile}, 'INTERACTION.GET')")
     @Override
-    public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String profile,
-                                                                         String partyInteractionId) {
-        return ResponseEntity.ok(new PartyInteractionType());
+    public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String partyInteractionId, String profile) {
+        return retrievePartyInteractionInternal(profile, partyInteractionId);
 
+    }
+
+    @LogicExtensionPoint(value = "PartyInteractionRetrieve", resolver = ProfileKeyResolver.class)
+    private ResponseEntity<PartyInteractionType> retrievePartyInteractionInternal(String profile,
+                                                                                  String partyInteractionId) {
+        return ResponseEntity.ok(new PartyInteractionType());
     }
 
     @Timed
