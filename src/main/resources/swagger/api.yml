@@ -231,6 +231,9 @@ paths:
 definitions:
     PartyInteractionType:
         properties:
+            'id':
+                description: Unique identifier of the interaction resource
+                type: string
             '@baseType':
                 description: Base Type of interaction
                 type: string
@@ -322,6 +325,9 @@ definitions:
     InteractionItemType:
         description: Item that was referred during the interaction
         properties:
+            reason:
+                description: Reason why this item is referred
+                type: string
             id:
                 type: string
                 description: Unique identifier of the item
@@ -351,6 +357,9 @@ definitions:
     RelatedEntityRefType:
         description: 'Reference to an external entity that can be tipically queried with another API such as a customer account, a ticket, etc.'
         properties:
+            '@type':
+                description: Type of the entity
+                type: string
             id:
                 type: string
                 description: Unique identifier of the entity
