@@ -33,7 +33,7 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
     @Override
     public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String partyInteractionId,
                                                                          String profile) {
-        return _retrievePartyInteraction(partyInteractionId, profile);
+        return _retrievePartyInteraction(profile, partyInteractionId);
     }
 
     @Timed
