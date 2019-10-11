@@ -33,12 +33,12 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
     @Override
     public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String profile,
                                                                          String partyInteractionId) {
-        return _retrievePartyInteraction(profile, partyInteractionId);
+        return _retrievePartyInteraction(partyInteractionId, profile);
     }
 
     @LogicExtensionPoint(value = "PartyInteractionRetrieve", resolver = ProfileKeyResolver.class)
-    public ResponseEntity<PartyInteractionType> _retrievePartyInteraction(String partyInteractionId,
-                                                                          String profile) {
+    public ResponseEntity<PartyInteractionType> _retrievePartyInteraction(String profile,
+                                                                          String partyInteractionId) {
         return ResponseEntity.ok(new PartyInteractionType());
     }
 
