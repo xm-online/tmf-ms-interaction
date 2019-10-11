@@ -29,13 +29,17 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
     }
 
     @Timed
-    @LogicExtensionPoint(value = "PartyInteractionRetrieve", resolver = ProfileKeyResolver.class)
     @PreAuthorize("hasPermission({'profile': #profile}, 'INTERACTION.GET')")
     @Override
     public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String profile,
                                                                          String partyInteractionId) {
-        return ResponseEntity.ok(new PartyInteractionType());
+        return _retrievePartyInteraction(profile, partyInteractionId);
+    }
 
+    @LogicExtensionPoint(value = "PartyInteractionRetrieve", resolver = ProfileKeyResolver.class)
+    public ResponseEntity<PartyInteractionType> _retrievePartyInteraction(String partyInteractionId,
+                                                                          String profile) {
+        return ResponseEntity.ok(new PartyInteractionType());
     }
 
     @Timed
