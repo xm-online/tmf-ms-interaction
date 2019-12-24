@@ -395,7 +395,7 @@ definitions:
                 type: string
             size:
                 type: number
-                format: decimal
+                format: double
             sizeUnit:
                 type: string
             url:

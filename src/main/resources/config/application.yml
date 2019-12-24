@@ -68,11 +68,14 @@ spring:
         open-in-view: false
         properties:
             hibernate.jdbc.time_zone: UTC
+            hibernate.model.generator_name_as_sequence_name: false # see org.hibernate.cfg.AvailableSettings.PREFER_GENERATOR_NAME_AS_DEFAULT_SEQUENCE_NAME
         hibernate:
             ddl-auto: none
             naming:
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    main:
+      allow-bean-definition-overriding: true
     messages:
         basename: i18n/messages
     mvc:
@@ -90,6 +93,7 @@ server:
         session:
             cookie:
                 http-only: true
+    port: 8714
 
 # Properties to be exposed on the /info management endpoint
 info:
