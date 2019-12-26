@@ -84,6 +84,7 @@ spring:
     kafka:
         bootstrap-servers: localhost:9092
 server:
+    port: 8714
     http2:
       enabled: false # To use HTTP/2 you will need to activate TLS (see application-tls.yml)
 
