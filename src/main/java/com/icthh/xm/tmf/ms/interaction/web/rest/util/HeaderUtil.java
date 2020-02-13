@@ -1,5 +1,6 @@
 package com.icthh.xm.tmf.ms.interaction.web.rest.util;
 
+import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -7,14 +8,12 @@ import org.springframework.http.HttpHeaders;
 /**
  * Utility class for HTTP headers creation.
  */
+@UtilityClass
 public final class HeaderUtil {
 
     private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
 
     private static final String APPLICATION_NAME = "interactionApp";
-
-    private HeaderUtil() {
-    }
 
     public static HttpHeaders createAlert(String message, String param) {
         HttpHeaders headers = new HttpHeaders();
