@@ -35,8 +35,7 @@ public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
     @PreAuthorize("hasPermission({'profile': #profile}, 'INTERACTION.GET')")
     @Override
     @PrivilegeDescription("Privilege to get a party interaction")
-    public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String profile,
-                                                                         String partyInteractionId) {
+    public ResponseEntity<PartyInteractionType> retrievePartyInteraction(String partyInteractionId, String profile) {
         return ResponseEntity.ok(new PartyInteractionType());
 
     }
