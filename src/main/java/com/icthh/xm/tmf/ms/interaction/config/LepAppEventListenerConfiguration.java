@@ -7,6 +7,7 @@ import com.icthh.xm.tmf.ms.interaction.lep.XmMsLepProcessingApplicationListener;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -20,11 +21,13 @@ public class LepAppEventListenerConfiguration {
         TenantConfigService tenantConfigService,
         @Qualifier("loadBalancedRestTemplate") RestTemplate restTemplate,
         CommonsService commonsService,
+        JdbcTemplate jdbcTemplate,
         PermissionCheckService permissionCheckService) {
 
         return new XmMsLepProcessingApplicationListener(
             tenantConfigService,
             restTemplate,
+            jdbcTemplate,
             commonsService,
             permissionCheckService);
     }
