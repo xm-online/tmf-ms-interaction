@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,7 +32,7 @@ public class ProfileKeyResolver extends AppendLepKeyResolver {
             ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return ofNullable(request.getHeader("Profile"))
             .or(() -> ofNullable(getParamValue(method, "profile", String.class)))
-            .orElseGet(String::new);
+            .orElse(Strings.EMPTY);
     }
 
     @Override
