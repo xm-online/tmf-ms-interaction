@@ -20,6 +20,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ApplicationProperties {
 
     private boolean kafkaEnabled;
+    private String exceptionTranslator;
     private String kafkaSystemTopic;
     private String kafkaSystemQueue;
     private boolean timelinesEnabled;
