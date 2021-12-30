@@ -4,6 +4,7 @@ import com.icthh.xm.commons.config.client.service.TenantConfigService;
 import com.icthh.xm.commons.lep.commons.CommonsService;
 import com.icthh.xm.commons.permission.service.PermissionCheckService;
 import com.icthh.xm.tmf.ms.interaction.lep.XmMsLepProcessingApplicationListener;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +23,17 @@ public class LepAppEventListenerConfiguration {
         @Qualifier("loadBalancedRestTemplate") RestTemplate restTemplate,
         CommonsService commonsService,
         JdbcTemplate jdbcTemplate,
-        PermissionCheckService permissionCheckService) {
-
+        PermissionCheckService permissionCheckService,
+        MeterRegistry meterRegistry
+    ) {
         return new XmMsLepProcessingApplicationListener(
             tenantConfigService,
             restTemplate,
             jdbcTemplate,
             commonsService,
-            permissionCheckService);
+            permissionCheckService,
+            meterRegistry
+        );
     }
 
 }
