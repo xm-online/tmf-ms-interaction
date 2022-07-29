@@ -3,6 +3,7 @@ package com.icthh.xm.tmf.ms.interaction.lep;
 import com.icthh.xm.commons.config.client.service.TenantConfigService;
 import com.icthh.xm.commons.lep.BaseProceedingLep;
 import com.icthh.xm.commons.lep.spring.LepThreadHelper;
+import com.icthh.xm.commons.lep.spring.lepservice.LepServiceFactory;
 import com.icthh.xm.commons.permission.service.PermissionCheckService;
 import com.icthh.xm.commons.security.XmAuthenticationContext;
 import com.icthh.xm.commons.tenant.TenantContext;
@@ -22,6 +23,7 @@ public class LepContext {
     public TenantContext tenantContext;
     public Object methodResult;
 
+    public LepServiceFactory lepServices;
     public LepServices services;
     public LepTemplates templates;
     public MeterRegistry meterRegistry;
