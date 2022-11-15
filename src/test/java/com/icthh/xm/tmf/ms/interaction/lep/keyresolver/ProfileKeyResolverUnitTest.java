@@ -2,7 +2,7 @@ package com.icthh.xm.tmf.ms.interaction.lep.keyresolver;
 
 import com.icthh.xm.lep.api.LepMethod;
 import com.icthh.xm.lep.api.MethodSignature;
-import com.icthh.xm.tmf.ms.interaction.web.rest.PartyInteractionDelegate;
+import com.icthh.xm.tmf.ms.interaction.web.rest.PartyInteractionDelegateV1;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Executable;
@@ -23,7 +23,7 @@ class ProfileKeyResolverUnitTest {
     @Test
     void shouldGetParamNameForMethodsWithDifferentParamIndex() {
 
-        Method[] methods = PartyInteractionDelegate.class.getMethods();
+        Method[] methods = PartyInteractionDelegateV1.class.getMethods();
 
         MethodSignature methodSignature = mock(MethodSignature.class);
         LepMethod lepMethod = mock(LepMethod.class);
