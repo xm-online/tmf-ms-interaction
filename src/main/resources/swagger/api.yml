@@ -348,6 +348,10 @@ definitions:
                 type: array
                 items:
                     $ref: '#/definitions/AttachmentType'
+            characteristic:
+                type: array
+                items:
+                    $ref: '#/definitions/CharacteristicType'
     RelatedEntityRefType:
         description: 'Reference to an external entity that can be tipically queried with another API such as a customer account, a ticket, etc.'
         properties:
@@ -402,6 +406,20 @@ definitions:
                 type: string
             validFor:
                 $ref: '#/definitions/TimePeriodType'
+    CharacteristicType:
+        description: Describes a given characteristic of an object or entity through a name/value pair.
+        required:
+            - name
+            - value
+        properties:
+            name:
+                type: string
+                description: Name of the characteristic
+            valueType:
+                type: string
+                description: Data type of the value of the characteristic
+            value:
+                $ref: '#/components/schemas/Any'
     TimePeriodType:
         properties:
             startDateTime:
@@ -412,3 +430,5 @@ definitions:
                 type: string
         required:
             - startDateTime
+    Any:
+        type: object
