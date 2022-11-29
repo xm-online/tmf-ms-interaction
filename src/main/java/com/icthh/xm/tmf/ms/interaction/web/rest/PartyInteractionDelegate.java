@@ -1,22 +1,23 @@
-package com.icthh.xm.tmf.ms.interaction.web.rest.v1_1;
+package com.icthh.xm.tmf.ms.interaction.web.rest;
 
 import com.google.common.collect.ImmutableList;
 import com.icthh.xm.commons.lep.LogicExtensionPoint;
 import com.icthh.xm.commons.lep.spring.LepService;
 import com.icthh.xm.commons.permission.annotation.PrivilegeDescription;
 import com.icthh.xm.tmf.ms.interaction.lep.keyresolver.ProfileKeyResolver;
-import com.icthh.xm.tmf.ms.interaction.web.api.model.v1_1.PartyInteractionType;
-import com.icthh.xm.tmf.ms.interaction.web.api.v1_1.PartyInteractionsV11ApiDelegate;
+import com.icthh.xm.tmf.ms.interaction.web.api.PartyInteractionApiDelegate;
+import com.icthh.xm.tmf.ms.interaction.web.api.model.PartyInteractionType;
 import io.micrometer.core.annotation.Timed;
-import java.time.OffsetDateTime;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
+import java.util.List;
+
 @Component
-@LepService(group = "service")
-public class PartyInteractionDelegateV11 implements PartyInteractionsV11ApiDelegate {
+@LepService(group = "service", name = "default")
+public class PartyInteractionDelegate implements PartyInteractionApiDelegate {
 
     @Timed
     @LogicExtensionPoint(value = "PartyInteractionCreate", resolver = ProfileKeyResolver.class)

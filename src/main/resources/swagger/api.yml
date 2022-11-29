@@ -6,13 +6,13 @@ produces:
     - application/json
 swagger: '2.0'
 tags:
-    - name: Party interactions v1.1
-basePath: /api/partyInteractionManagement/v1.1
+    - name: Party interactions
+basePath: /api/partyInteractionManagement/v1
 host: serverRoot
 info:
     description: 'The party interactions management TMF Open API is intented to be used to create or retrieve information about when, how and why any party has interacted with a company.'
     title: Party Interaction Management
-    version: 1.0.1
+    version: 1.0.0
 paths:
     /partyInteraction:
         post:
@@ -56,7 +56,7 @@ paths:
                     description: Internal Server Error
             summary: Create a new party interaction
             tags:
-                - Party interactions v1.1
+                - Party interactions
         get:
             operationId: retrievePartyInteractions
             parameters:
@@ -152,7 +152,7 @@ paths:
                     description: Internal Server Error
             summary: Retrieve a list of party interactions
             tags:
-                - Party interactions v1.1
+                - Party interactions
     '/partyInteraction/{partyInteractionId}':
         get:
             operationId: retrievePartyInteraction
@@ -188,7 +188,7 @@ paths:
                     description: Internal Server Error
             summary: Retrieve a party interaction
             tags:
-                - Party interactions v1.1
+                - Party interactions
     '/partyInteraction/{partyInteractionId}/status':
         put:
             operationId: modifyPartyInteractionStatus
@@ -227,7 +227,7 @@ paths:
                     description: Internal Server Error
             summary: Modify party interaction status
             tags:
-                - Party interactions v1.1
+                - Party interactions
 definitions:
     PartyInteractionType:
         properties:
@@ -321,7 +321,6 @@ definitions:
             - id
     InteractionItemType:
         description: Item that was referred during the interaction
-        discriminator: '@type'
         properties:
             id:
                 type: string
@@ -329,9 +328,6 @@ definitions:
             href:
                 type: string
                 description: URI where to query or perform actions on the item
-            '@type':
-                type: string
-                description: Used when sub-classing
             '@referredType':
                 type: string
                 description: 'Type of item (e.g.: order, ticket, etc.)'
@@ -352,14 +348,10 @@ definitions:
                 type: array
                 items:
                     $ref: '#/definitions/AttachmentType'
-    ExtendedInteractionItemType:
-        allOf:
-            - $ref: '#/definitions/InteractionItemType'
-            - properties:
-                  characteristic:
-                      type: array
-                      items:
-                          $ref: '#/definitions/CharacteristicType'
+            characteristic:
+                type: array
+                items:
+                    $ref: '#/definitions/CharacteristicType'
     RelatedEntityRefType:
         description: 'Reference to an external entity that can be tipically queried with another API such as a customer account, a ticket, etc.'
         properties:
@@ -415,7 +407,7 @@ definitions:
             validFor:
                 $ref: '#/definitions/TimePeriodType'
     CharacteristicType:
-        description: tbd
+        description: Describes a given characteristic of an object or entity through a name/value pair.
         required:
             - name
             - value
