@@ -2,13 +2,6 @@ language: java
 jdk:
 - openjdk11
 install: true
-addons:
-  sonarcloud:
-    organization: xm-online
-    token:
-      secure: ZfYo4fbSSea6PTM5ec2oXhjJTndeHjM1nfj7ExpLeVx18K6kQg7ryteiDx0UB7naKyLNRsQ+aX0Ag7p2HB/JjnCipi+7mwJ3r2RGWAV51FhZLOUjkoAEsql6zvvnJOHN9XQbj1MdZhZBGNLKdQwKwopEaeW+pW4kxXQaaQrfPo7a8wlSXeA8XXEb+E4hLoE2NFq3Duom0AE51bHBOYC+cBLak+ch9gb0E/pFC8zDhS3cWWWj4bU87goP7t3Z9WsDG/Dlr8tKGdEp0ypJhHF9ms7bqoaatiwGiS7jt1W7z5fGTZ/j6+NNenh6S9n7LxlDq29a3VW13W8FDRtnVQ6JxSxf5EKgbq6CpqdkE3Dgt5qRGF8TJML4RdLgFZsmb9GfTdL5YBcDx1Z0++2QKgRLPTSINavWjpfgRpUVlJgDYqIkAOpm9U/XXmNaGDQM4heoXSeO0+FZVuTNrV5d7QKrFb03rlRwQnmc8aP12+k55J2alwTXTGtx6/pFNtCnsJGXUQN+GpFFDw/eWTxJ5FEcqytvhPq7wo/JhpJJc7Zs+THrenJtIReGaYNqWWVE6n1eZonLhUJreMH/zy2J+b8TgcV33wwr0SQuhVfoyEbqy+DLuNgvAO9p1SkNBfvOYIciQrSrKKKitBCmTZ51fqFfGUr9dB5cCzKJZEDcO1tgvzY=
-    branches:
-    - master
 
 script:
   - set -e
@@ -18,16 +11,7 @@ script:
   - export DOCKER_REPO=$(echo  -n $TRAVIS_REPO_SLUG | sed -e 's/^xm-online\//xmonline\//g')
   - export IMAGE_BRANCH=$(echo -n $TRAVIS_BRANCH | sed -e 's/\//-/g')
   - export PROJECT_VERSION="$IMAGE_BRANCH"
-  - if [ "$IMAGE_BRANCH" == "master" ]; 
-    then 
-        PROJECT_VERSION=$(./gradlew -q  getProjectVersion);
-        export SONAR_PK=$(echo  -n $TRAVIS_REPO_SLUG | sed -e 's/\//:/g');
-        ./gradlew -x test --no-daemon sonarqube -Dsonar.projectKey="$SONAR_PK"
-        -Dsonar.projectName="$SONAR_PK" -Dsonar.java.binaries="." -Dsonar.projectVersion="$IMAGE_BRANCH";
-        TAGS="$PROJECT_VERSION $PROJECT_VERSION-$TRAVIS_BUILD_NUMBER $(echo $PROJECT_VERSION | awk -F '.' '{printf $1"."$2" "$1}') latest";
-    else
-        TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";
-    fi
+  - TAGS="$IMAGE_BRANCH $IMAGE_BRANCH-$TRAVIS_BUILD_NUMBER";
   - docker build -t app-docker-img --label commit_id="$TRAVIS_COMMIT" --label version="$PROJECT_VERSION" --label build_number="$TRAVIS_BUILD_NUMBER" --label build_url="$TRAVIS_BUILD_WEB_URL" --label git_url="$TRAVIS_REPO_SLUG" --label commit_message="$TRAVIS_COMMIT_MESSAGE" -f src/main/docker/Dockerfile .
   - for TAG in $TAGS;
     do

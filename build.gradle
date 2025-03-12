@@ -17,6 +17,7 @@ plugins {
     id "maven-publish"
     id "idea"
     id "jacoco"
+    id "org.ajoberstar.grgit"
     id "org.springframework.boot"
     id "com.google.cloud.tools.jib"
     id "com.gorylenko.gradle-git-properties"
@@ -25,7 +26,6 @@ plugins {
     id "net.ltgt.apt-idea"
     id "net.ltgt.apt"
     id "org.liquibase.gradle"
-    id "org.sonarqube"
     id "com.github.spotbugs"
     id 'checkstyle'
     id 'pmd'
@@ -43,7 +43,6 @@ targetCompatibility = JavaVersion.VERSION_11
 assert System.properties["java.specification.version"] == "11" || "12" || "13"
 
 apply from: "gradle/docker.gradle"
-apply from: "gradle/sonar.gradle"
 apply from: "gradle/swagger.gradle"
 apply from: "gradle/version.gradle"
 //jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
